@@ -1,23 +1,31 @@
 
+from components.Ball import Ball
+from components.Brick import Brick
+
+
 class Grid:
   def __init__(self) -> None:
-    self.bricks = []
+    self.bricks: list[Brick] = []
   
-  def appendBricks(self, *bricks):
-    print(bricks)
-    for brick in bricks:
-      self.bricks.append(brick)
+  def append_bricks(self, *bricks):
+    self.bricks += bricks
+  
+  def set_bricks(self, *bricks):
+    self.bricks = list(bricks)
     
   def draw(self):
     for brick in self.bricks:
       brick.draw()
   
-  def destroyBrick(self, brick):
+  def destroy_brick(self, brick):
     self.bricks.remove(brick)
 
-  def checkForBallCollision(self, ball):
+  def size(self):
+    return len(self.bricks)
+
+  def check_for_ball_collision(self, ball: Ball):
     for brick in self.bricks:
-      collided = ball.checkRectCollision(brick)
+      collided = ball.check_rect_collision(brick)
       if (collided):
-        brickHealth = brick.wasHit(collided)
-        if brickHealth == 0: self.destroyBrick(brick)
+        brick_health = brick.was_hit(collided)
+        if brick_health == 0: self.destroy_brick(brick)

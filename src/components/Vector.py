@@ -7,33 +7,50 @@ class Axis(Enum):
 
 class Vector:
   def __init__(self, x=0, y=0) -> None:
-    self.x = x
-    self.y = y
-    self.angle = atan(x/y) if y != 0 and x != 0 else 0
-    self.r = sqrt(x*x+y*y)
+    self.__x = x
+    self.__y = y
+    self.__recalculate_polar()
+  
+  @property
+  def x(self):
+    return self.__x
+  @x.setter
+  def x(self, value):
+    self.__x = value
+    self.__recalculate_polar()
+  @property
+  def y(self):
+    return self.__y
+  @y.setter
+  def y(self, value):
+    self.__y = value
+    self.__recalculate_polar()
 
-  def recalculateComponentsLengths(self):
-    self.x = cos(self.angle)*self.r
-    self.y = sin(self.angle)*self.r
+  def __recalculate_polar(self):
+    self.__angle = atan(self.__y/self.__x) if self.__y != 0 and self.__x != 0 else 0
+    self.__r = sqrt(self.__x**2+self.__y**2)
+  def __recalculate_components_lengths(self):
+    self.__x = cos(self.__angle)*self.__r
+    self.__y = sin(self.__angle)*self.__r
 
-  def changeAngle(self, deltaTheta):
-    self.setAngle(self.angle + deltaTheta)
+  def change_angle(self, deltaTheta):
+    self.set_angle(self.__angle + deltaTheta)
 
-  def reflectAngleBy(self, axis):
+  def reflect_angle_by(self, axis):
     print(f"Reflecting by {axis}")
     if axis == Axis.Y:
-      self.setAngle(pi - self.angle)
+      self.x = -self.x
     elif axis == Axis.X:
-      self.setAngle(-self.angle)
+      self.y = -self.y
 
-  def setAngle(self, newTheta):
-    self.angle = newTheta
-    if self.angle > pi: self.angle = -4*pi+self.angle
-    elif self.angle < -pi: self.angle = 4*pi+self.angle
-    self.recalculateComponentsLengths()
+  def set_angle(self, newTheta):
+    self.__angle = newTheta
+    if self.__angle > pi: self.__angle = -4*pi+self.__angle
+    elif self.__angle < -pi: self.__angle = 4*pi+self.__angle
+    self.__recalculate_components_lengths()
   
-  def setPolar(self, r, angle):
-    self.angle = angle
-    self.r = r
-    self.recalculateComponentsLengths()
+  def set_polar(self, r, angle):
+    self.__angle = angle
+    self.__r = r
+    self.__recalculate_components_lengths()
 
