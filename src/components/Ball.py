@@ -18,7 +18,6 @@ class Ball:
     pyxel.circ(self.x, self.y, self.radius, self.color)
 
   def update(self):
-    self.adjust_speed()
     delta_x = round(self.v.x)
     delta_y = round(self.v.y)
     self.x += delta_x
@@ -73,10 +72,9 @@ class Ball:
     if delta_x > 0:
       new_angle += -pi
     
-    p = 5
+    p = 6
     new_angle = round(new_angle/pi*p)*pi/p
 
-    print(new_angle*180/pi)
     self.v.set_angle(new_angle)
   
   def speed(self):

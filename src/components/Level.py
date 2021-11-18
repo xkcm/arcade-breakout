@@ -7,11 +7,24 @@ class State(Enum):
   FAILED = 0
   INGAME = 1
   VICTORY = 2
+  OUTGAME = 3
+
+class Difficulty(Enum):
+  NOOB = 0
+  EASY = 1
+  MEDIOCRE = 2
+  MODERATE = 3
+  MEDIUM = 4
+  HARD = 5
+  REALLY_HARD = 6
+  EXTREME = 7
+  LEGENDARY = 8
 
 class Level:
-  def __init__(self, level_no):
+  def __init__(self, level_no, difficulty):
     self.bricks_layout = Grid()
     self.level_no = level_no
-    
+    self.difficulty: Difficulty = difficulty
+
   def load_level(self):
     pass

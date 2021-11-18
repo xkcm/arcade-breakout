@@ -8,10 +8,13 @@ class Grid:
     self.bricks: list[Brick] = []
   
   def append_bricks(self, *bricks):
-    self.bricks += bricks
+    self.bricks += list(bricks)
   
   def set_bricks(self, *bricks):
     self.bricks = list(bricks)
+  
+  def clear_bricks(self):
+    self.bricks = []
     
   def draw(self):
     for brick in self.bricks:

@@ -22,4 +22,6 @@ class BottomBar(Rect):
     if (units is None): units = self.default_speed
     self.move_x(self.x-units)
   def draw(self):
-    super().draw(7)
+    super().draw(pyxel.COLOR_WHITE)
+  def set_speed(self, speed):
+    self.default_speed = speed

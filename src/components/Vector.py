@@ -37,7 +37,6 @@ class Vector:
     self.set_angle(self.__angle + deltaTheta)
 
   def reflect_angle_by(self, axis):
-    print(f"Reflecting by {axis}")
     if axis == Axis.Y:
       self.x = -self.x
     elif axis == Axis.X:
