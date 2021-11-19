@@ -1,6 +1,7 @@
 
 import pyxel
-import random
+from time import time
+from random import choice
 
 class Align:
   LEFT = 0b1
@@ -27,11 +28,18 @@ def print_aligned_text(x, y, s, color, align):
     y -= height
   pyxel.text(x, y, s, color)
 
-def random_color():
+def random_color(exclude=None):
+  exclude = exclude or []
   keys = pyxel.__dict__.keys()
-  keys = [*filter(lambda key: key.startswith("COLOR_") and key != "COLOR_COUNT", keys)]
-  color = random.choice(keys)
+  keys = [*filter(lambda key: key.startswith("COLOR_") and key != "COLOR_COUNT" and key not in exclude, keys)]
+  color = choice(keys)
   return pyxel.__dict__.get(color)
 
 def constrain(n, minn, maxn):
   return max(min(maxn, n), minn)
+
+def milis():
+  return int(time()*1000)
+
+def round_angle(theta, parts, max_angle):
+  return round(theta/max_angle*parts)*max_angle/parts

@@ -21,10 +21,11 @@ class Difficulty(Enum):
   LEGENDARY = 8
 
 class Level:
-  def __init__(self, level_no, difficulty):
+  def __init__(self, level_no, difficulty, chance_of_power_up):
     self.bricks_layout = Grid()
     self.level_no = level_no
     self.difficulty: Difficulty = difficulty
+    self.chance_of_power_up = chance_of_power_up
 
   def load_level(self):
     pass

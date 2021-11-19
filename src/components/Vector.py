@@ -52,4 +52,8 @@ class Vector:
     self.__angle = angle
     self.__r = r
     self.__recalculate_components_lengths()
+  
+  def set_length(self, length):
+    self.__r = length
+    self.__recalculate_components_lengths()
 

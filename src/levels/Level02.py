@@ -7,9 +7,12 @@ from utils import random_color
 
 class Level02(Level):
   def __init__(self):
-    super().__init__(2, Difficulty.EASY)
+    super().__init__(
+      2,
+      Difficulty.EASY,
+      0.85
+    )
   def load_level(self):
-    self.bricks_layout.clear_bricks()
     bricks_in_row = 16
     brick_width = pyxel.width / bricks_in_row
     for i in range(bricks_in_row):

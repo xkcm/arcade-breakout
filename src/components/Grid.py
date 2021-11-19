@@ -26,9 +26,13 @@ class Grid:
   def size(self):
     return len(self.bricks)
 
-  def check_for_ball_collision(self, ball: Ball):
+  def check_for_ball_collision(self, ball: Ball) -> tuple[int, Brick]:
     for brick in self.bricks:
       collided = ball.check_rect_collision(brick)
       if (collided):
         brick_health = brick.was_hit(collided)
-        if brick_health == 0: self.destroy_brick(brick)
+        if brick_health == 0:
+          self.destroy_brick(brick)
+          return [2, brick]
+        return [1, brick]
+    return [0, None]

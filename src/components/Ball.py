@@ -3,16 +3,24 @@ import pyxel
 
 from components.Rect import Edge
 from components.Vector import Axis, Vector
+from utils import round_angle
 
 
 class Ball:
-  def __init__(self, radius, x, y, vx, vy, color) -> None:
-    self.radius = radius
+
+  DEFAULT_SPEED = 2
+  DEFAULT_RADIUS = 3
+  DEFAULT_COLOR = pyxel.COLOR_WHITE
+
+  def __init__(self, x, y, color=None, radius=None, vx=None, vy=None) -> None:
+    self.radius = radius or Ball.DEFAULT_RADIUS
     self.x = x
     self.y = y
-    self.v = Vector(vx, vy)
-    self.intended_speed = self.speed()
-    self.color = color
+    self.v = Vector(vx or 0, vy or -Ball.DEFAULT_SPEED)
+    self.color = color or Ball.DEFAULT_COLOR
+  
+  def set_speed(self, speed=None):
+    self.v.set_length(speed or Ball.DEFAULT_SPEED)
   
   def draw(self):
     pyxel.circ(self.x, self.y, self.radius, self.color)
@@ -71,17 +79,10 @@ class Ball:
     new_angle = atan(delta_y/delta_x) if delta_x != 0 else -pi/2
     if delta_x > 0:
       new_angle += -pi
-    
-    p = 6
-    new_angle = round(new_angle/pi*p)*pi/p
+
+    new_angle = round_angle(new_angle, 6, pi)
 
     self.v.set_angle(new_angle)
   
   def speed(self):
     return sqrt(self.v.x**2+self.v.y**2)
-  
-  def adjust_speed(self):
-    real_speed = self.speed()
-    a = self.intended_speed/real_speed
-    self.v.x = a*self.v.x
-    self.v.y = a*self.v.y
