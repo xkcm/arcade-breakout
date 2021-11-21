@@ -11,6 +11,16 @@ class Level01(Level):
     )
   def load_level(self):
     self.bricks_layout.set_bricks(
-      Brick(1, 1, pyxel.width/2-1, 10, 1, pyxel.COLOR_BROWN),
-      Brick(pyxel.width/2+1, 1, pyxel.width/2-1, 10, 1, pyxel.COLOR_CYAN)
+      Brick(x=96, y=80, color=pyxel.COLOR_LIGHTBLUE),
+      Brick(x=112, y=80, color=pyxel.COLOR_ORANGE),
+      Brick(x=128, y=80, color=pyxel.COLOR_LIGHTBLUE),
+      Brick(x=144, y=80, color=pyxel.COLOR_ORANGE),
+
+      Brick(x=96, y=96, color=pyxel.COLOR_ORANGE),
+      Brick(x=96, y=112, color=pyxel.COLOR_LIGHTBLUE),
+      Brick(x=96, y=128, color=pyxel.COLOR_ORANGE),
+
+      Brick(x=144, y=96, color=pyxel.COLOR_LIGHTBLUE),
+      Brick(x=144, y=112, color=pyxel.COLOR_ORANGE),
+      Brick(x=144, y=128, color=pyxel.COLOR_LIGHTBLUE)
     )

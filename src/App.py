@@ -12,6 +12,9 @@ from components.PowerUp import PowerUp, PowerUpType
 from components.Rect import Edge
 from levels.Level01 import Level01
 from levels.Level02 import Level02
+from levels.Level03 import Level03
+from levels.Level04 import Level04
+from levels.Level05 import Level05
 from utils import Align, constrain, print_aligned_text, random_color, round_angle
 
 
@@ -38,7 +41,7 @@ class App:
     self.balls: list[Ball] = []
 
     pyxel.init(App.WIDTH, App.HEIGHT, fps=App.FPS, scale=3, caption="Breakout")
-    pyxel.load("../resources.pyxres")
+    pyxel.load("./resources.pyxres")
 
     self.init_components()
     self.load_levels()
@@ -133,7 +136,10 @@ class App:
   def load_levels(self):
     self.levels = [
       Level01(),
-      Level02()
+      Level02(),
+      Level03(),
+      Level04(),
+      Level05()
     ]
 
   def spawn_power_up(self, type: PowerUpType, spawn_pos: list[int]):
@@ -146,13 +152,16 @@ class App:
       action_on_end = lambda: self.bottom_bar.set_width()
     elif type is PowerUpType.TRIPLE_BALL:
       def spawn_3_balls():
+        random_ball = choice(self.balls)
+        k = 1
         for _ in range(3):
-          random_ball = choice(self.balls)
-          new_ball = self.spawn_ball(random_ball.x, random_ball.y, color=random_color(exclude=["COLOR_BLACK"]))
-          random_angle = round_angle(random()*2*pi, 12, 2*pi)-pi
-          if random_angle == 0 or random_angle == pi or random_angle == -pi:
-            random_angle = choice([-pi/2, pi/2])
-          new_ball.v.set_angle(random_angle)
+          new_ball = self.spawn_ball(random_ball.x, random_ball.y, color=random_color(exclude=[ pyxel.COLOR_BLACK ]))
+          new_angle = random_ball.v.angle + pi/6*k
+          if new_angle == pi or new_angle == 0 or new_angle == -pi:
+            new_angle += pi/6
+            k += 1
+          k += 1
+          new_ball.v.change_angle(new_angle)
       action = spawn_3_balls
     elif type is PowerUpType.SLOW_DOWN:
       action = lambda: self.bottom_bar.set_speed(BottomBar.DEFAULT_SPEED/2)
@@ -244,9 +253,9 @@ class App:
         for power_up in self.power_ups:
           power_up.draw()
         
-        print_aligned_text(2, self.bottom_bar.y-6-pyxel.FONT_HEIGHT*2, f"Power-up probability: {self.current_level.chance_of_power_up}", pyxel.COLOR_ORANGE, Align.LEFT | Align.BOTTOM)
+        print_aligned_text(2, self.bottom_bar.y-6-pyxel.FONT_HEIGHT*2, f"Level {self.current_level.level_no}", pyxel.COLOR_WHITE, Align.LEFT | Align.BOTTOM)
         print_aligned_text(2, self.bottom_bar.y-4-pyxel.FONT_HEIGHT, f"Difficulty: {self.current_level.difficulty.name}", pyxel.COLOR_RED, Align.LEFT | Align.BOTTOM)
-        print_aligned_text(2, self.bottom_bar.y-2, f"Level {self.current_level.level_no}", pyxel.COLOR_WHITE, Align.LEFT | Align.BOTTOM)
+        print_aligned_text(2, self.bottom_bar.y-2, f"Power-up probability: {self.current_level.chance_of_power_up*100}%", pyxel.COLOR_ORANGE, Align.LEFT | Align.BOTTOM)
     
     if (self.level_state is not State.INGAME and self.current_level is not None) or self.current_level is None:
       for i, btn in enumerate(self.buttons):

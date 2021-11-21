@@ -25,6 +25,9 @@ class Vector:
   def y(self, value):
     self.__y = value
     self.__recalculate_polar()
+  @property
+  def angle(self):
+    return self.__angle
 
   def __recalculate_polar(self):
     self.__angle = atan(self.__y/self.__x) if self.__y != 0 and self.__x != 0 else 0

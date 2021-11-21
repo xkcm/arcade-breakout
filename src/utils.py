@@ -31,7 +31,7 @@ def print_aligned_text(x, y, s, color, align):
 def random_color(exclude=None):
   exclude = exclude or []
   keys = pyxel.__dict__.keys()
-  keys = [*filter(lambda key: key.startswith("COLOR_") and key != "COLOR_COUNT" and key not in exclude, keys)]
+  keys = [*filter(lambda key: key.startswith("COLOR_") and key != "COLOR_COUNT" and pyxel.__dict__.get(key) not in exclude, keys)]
   color = choice(keys)
   return pyxel.__dict__.get(color)
 
