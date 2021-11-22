@@ -35,7 +35,7 @@ class PowerUp(Rect):
 
   def draw(self):
     if not self.drawable: return
-    pyxel.blt(self.x, self.y, 0, self.image_pos[0], self.image_pos[1], self.width, self.height)
+    pyxel.blt(self.x, self.y, 0, self.image_pos[0], self.image_pos[1], self.width, self.height, pyxel.COLOR_BLACK)
   
   def collided(self):
     pyxel.play(1, 1)
