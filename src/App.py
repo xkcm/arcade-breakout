@@ -83,7 +83,7 @@ class App:
   
   def load_levels_menu(self, page=1):
     pyxel.cls(0)
-    n = 9
+    n = 4
     n_per_page = n*(n-1)
     levels_count = len(self.levels)
     pages = ceil(levels_count/float(n_per_page))
@@ -98,31 +98,31 @@ class App:
       )
       buttons[-1].set_text(level.level_no)
       buttons[-1].set_action(lambda l=level: self.load_level(l))
-    if pages > 1:
-      page_buttons = 13
-      page_buttons_spacing = 3
-      page_button_width = (App.WIDTH - (page_buttons+1)*page_buttons_spacing) / page_buttons
-      page_from = int(constrain(page - page_buttons/2+1, 1, pages))
-      page_to = int(constrain(page_from + page_buttons-1, 1, pages))
-      if page_to - page_from + 1 < page_buttons:
-        page_from = int(constrain(page_to - page_buttons + 1, 1, pages))
-      for i in range(page_from, page_to+1):
-        buttons.append(
-          Button(
-            (i-page_from)*(page_buttons_spacing+page_button_width)+page_buttons_spacing,
-            App.HEIGHT - 2 - page_button_width,
-            page_button_width,
-            page_button_width,
-            color=pyxel.COLOR_BLACK,
-            text_color=pyxel.COLOR_WHITE,
-            focus_color=pyxel.COLOR_BLACK,
-            focus_text_color=pyxel.COLOR_DARKBLUE
-          )
+    
+    page_buttons = 13
+    page_buttons_spacing = 3
+    page_button_width = (App.WIDTH - (page_buttons+1)*page_buttons_spacing) / page_buttons
+    page_from = int(constrain(page - page_buttons/2+1, 1, pages))
+    page_to = int(constrain(page_from + page_buttons-1, 1, pages))
+    if page_to - page_from + 1 < page_buttons:
+      page_from = int(constrain(page_to - page_buttons + 1, 1, pages))
+    for i in range(page_from, page_to+1):
+      buttons.append(
+        Button(
+          (i-page_from)*(page_buttons_spacing+page_button_width)+page_buttons_spacing,
+          App.HEIGHT - 2 - page_button_width,
+          page_button_width,
+          page_button_width,
+          color=pyxel.COLOR_BLACK,
+          text_color=pyxel.COLOR_WHITE,
+          focus_color=pyxel.COLOR_BLACK,
+          focus_text_color=pyxel.COLOR_YELLOW
         )
-        buttons[-1].set_text(i)
-        buttons[-1].set_action(lambda p=i: self.load_levels_menu(p))
-        if i == page: buttons[-1].set_text_color(pyxel.COLOR_PURPLE)
-        print_aligned_text(3, App.HEIGHT - 5 - page_button_width, f"PAGE {page}/{pages}", pyxel.COLOR_PURPLE, Align.LEFT | Align.BOTTOM)
+      )
+      buttons[-1].set_text(i)
+      buttons[-1].set_action(lambda p=i: self.load_levels_menu(p))
+      if i == page: buttons[-1].set_text_color(pyxel.COLOR_PURPLE)
+      print_aligned_text(3, App.HEIGHT - 5 - page_button_width, f"PAGE {page}/{pages}", pyxel.COLOR_PURPLE, Align.LEFT | Align.BOTTOM)
     self.create_buttons(*buttons)
     self.config_button_focus(-n, n, -1, 1, 1)
 
