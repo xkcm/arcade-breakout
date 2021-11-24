@@ -1,5 +1,6 @@
 from enum import Enum
 from math import atan, cos, sin, sqrt, pi
+from random import choice
 
 class Axis(Enum):
   X = 0
@@ -20,6 +21,8 @@ class Vector:
     self.__recalculate_polar()
   @property
   def y(self):
+    if int(self.__y) == 0:
+      self.change_angle(pi/6*choice([-1, 1]))
     return self.__y
   @y.setter
   def y(self, value):

@@ -152,14 +152,11 @@ class App:
       action_on_end = lambda: self.bottom_bar.set_width()
     elif type is PowerUpType.TRIPLE_BALL:
       def spawn_3_balls():
-        random_ball = choice(self.balls)
         k = 1
         for _ in range(3):
+          random_ball = choice(self.balls)
           new_ball = self.spawn_ball(random_ball.x, random_ball.y, color=random_color(exclude=[ pyxel.COLOR_BLACK ]))
-          new_angle = random_ball.v.angle + pi/6*k
-          if new_angle == pi or new_angle == 0 or new_angle == -pi:
-            new_angle += pi/6
-            k += 1
+          new_angle = random_ball.v.angle + pi/6*k*choice((-1, 1))
           k += 1
           new_ball.v.change_angle(new_angle)
       action = spawn_3_balls
